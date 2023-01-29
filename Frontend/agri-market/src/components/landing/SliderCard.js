@@ -12,7 +12,7 @@ const SliderCard = (props) => {
             <div>
                 <p className='text-center text-black font-semibold text-lg my-1' >RS {props.item.price}/-</p>
             </div>
-            <div className='text-center w-32 mx-auto mt-4 py-2 rounded-md border border-black hover:font-bold hover:bg-[#06f917] hover:text-white duration-300 ' >
+            <div className='text-center w-32 mx-auto mt-4 py-2 rounded-md border border-black cursor-pointer active:scale-90 hover:bg-gradient-to-t from-[#06f917] to-green-600 hover:text-white duration-300 ' >
                 <p>Add To Cart</p>
             </div>
         </div>

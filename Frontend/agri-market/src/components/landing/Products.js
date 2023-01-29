@@ -3,12 +3,13 @@ import { Navigation, Pagination, Scrollbar, A11y, Autoplay } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import SliderCard from './SliderCard';
+import PlantSpinner from '../spinner/PlantSpinner';
 
 const Products = (props) => {
     const items = props.data
 
     if (!items) {
-        return null
+        return <PlantSpinner/>
     }
 
     const listItems = items.map((item) =>
