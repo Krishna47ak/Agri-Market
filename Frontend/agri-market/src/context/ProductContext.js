@@ -12,7 +12,7 @@ const productReducer = (state, action) => {
 
 const fetchProducts = dispatch => async () => {
     try {
-        const response = await axios.get("https://run.mocky.io/v3/954c1249-ac3e-4366-8bfa-7a2ebad49843")
+        const response = await axios.get("https://run.mocky.io/v3/18189840-7783-4ef6-b2ba-0c86565738c3")
         dispatch({ type: 'fetch_products', payload: response.data })
     } catch(err) {
         console.log('somethng went wrong')
