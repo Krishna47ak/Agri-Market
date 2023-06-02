@@ -1,7 +1,24 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState, useContext } from 'react'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
+import { Context as AuthContext } from '../context/AuthContext'
+
 
 const Login = () => {
+    const { state , login } = useContext(AuthContext)
+    const history = useNavigate()
+
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    
+    const onSubmit = (e) => {
+        e.preventDefault()  //Doesn't refresh
+        login(email, password, history)
+    }
+
+    if (state.isAuthenticated) {
+        return <Navigate to="/profile"/>
+    }
+    
     return (
         <div className='flex justify-center' >
             <div className="bg-gray-100 w-[30rem] my-10 rounded-2xl">
@@ -11,10 +28,10 @@ const Login = () => {
                         If you are already Link member, easily log in
                     </p>
                     <form action="" className="flex flex-col gap-4 ">
-                        <input className="p-2 mt-8 rounded-xl border border-purple-300" type="email" name="email" placeholder="Email" />
-                        <input className="p-2 rounded-xl border w-full border-purple-300 " type="password" name="password"
+                        <input value={email} onChange={e => setEmail(e.target.value)} className="p-2 mt-8 rounded-xl border border-purple-300" type="email" name="email" placeholder="Email" />
+                        <input value={password} onChange={e => setPassword(e.target.value)} className="p-2 rounded-xl border w-full border-purple-300 " type="password" name="password"
                             placeholder="Password" />
-                        <button className="bg-gradient-to-r from-purple-600 to-blue-500 rounded-xl text-white py-2 hover:scale-105 duration-300">
+                        <button onClick={onSubmit} className="bg-gradient-to-r from-purple-600 to-blue-500 rounded-xl text-white py-2 hover:scale-105 duration-300">
                             Login
                         </button>
                     </form>
