@@ -10,7 +10,7 @@ app.use(bodyParser.json())
 app.use(authRoutes)
 
 mongoose.set("strictQuery", false)
-const mongoUri = 'mongodb+srv://userhackathon:passwordpassword@cluster0.gtxefuk.mongodb.net/?retryWrites=true&w=majority'
+const mongoUri = 'mongodb+srv://agrimarket:agrimartagrimart@cluster0.hw1kout.mongodb.net/'
 mongoose.connect(mongoUri, {
     useNewUrlParser: true,
 })
@@ -27,6 +27,6 @@ app.get('/', requireAuth, (req,res) => {
     res.send(`Your email: ${req.user.email}`)
 })
 
-app.listen(3000, () => {
-    console.log('listening on port 3000');
+app.listen(4000, () => {
+    console.log('listening on port 4000');
 })
