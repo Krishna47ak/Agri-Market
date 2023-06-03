@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const instance = axios.create({
-    baseURL: 'https://2120-2409-4071-2095-1cf7-ed4b-4fc9-bb1c-85d4.ngrok-free.app'
+    baseURL: 'https://3b0e-2402-3a80-1a93-ee0c-e847-5cd0-6d69-7526.ngrok-free.app'
 })
 
 instance.interceptors.request.use(

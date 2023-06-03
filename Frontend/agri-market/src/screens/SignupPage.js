@@ -1,7 +1,37 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState, useContext } from 'react'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
+import { Context as AuthContext } from '../context/AuthContext'
 
 const Signup = () => {
+    const { state, signup } = useContext(AuthContext)
+    const history = useNavigate()
+
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        mobile: '',
+        password: '',
+        password2: ''
+    })
+
+    const { name, email, mobile, password, password2 } = formData
+
+    const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value })
+
+    const onSubmit = e => {
+        e.preventDefault()
+        if (password !== password2) {
+            console.error("Password do not match");
+            // setAlert('Passwords do not match', 'danger');
+        } else {
+            signup(name, email, mobile, password, history)
+        }
+    }
+
+    if (state.isAuthenticated) {
+        return <Navigate to="/profile" />
+    }
+
     return (
         <div className='flex justify-center' >
             <div className="bg-gray-100 w-[30rem] my-10 rounded-2xl">
@@ -11,15 +41,15 @@ const Signup = () => {
                         Welcome, let's create a new account
                     </p>
                     <form action="" className="flex flex-col gap-4 ">
-                        <input className="p-2 mt-8 rounded-xl border border-purple-300" type="text" name="name" placeholder="Name" />
-                        <input className="p-2 rounded-xl border border-purple-300" type="email" name="email" placeholder="Email" />
-                        <input className="p-2 rounded-xl border w-full border-purple-300 " type="tel" name="number"
+                        <input value={name} onChange={onChange} className="p-2 mt-8 rounded-xl border border-purple-300" type="text" name="name" placeholder="Name" />
+                        <input value={email} onChange={onChange} className="p-2 rounded-xl border border-purple-300" type="email" name="email" placeholder="Email" />
+                        <input value={mobile} onChange={onChange} className="p-2 rounded-xl border w-full border-purple-300 " type="tel" name="mobile"
                             placeholder="Mobile Number" />
-                        <input className="p-2 rounded-xl border w-full border-purple-300 " type="password" name="password"
+                        <input value={password} onChange={onChange} className="p-2 rounded-xl border w-full border-purple-300 " type="password" name="password"
                             placeholder="Password" />
-                        <input className="p-2 rounded-xl border w-full border-purple-300 " type="password" name="password"
+                        <input value={password2} onChange={onChange} className="p-2 rounded-xl border w-full border-purple-300 " type="password" name="password2"
                             placeholder="Confirm password" />
-                        <button className="bg-gradient-to-r from-purple-600 to-blue-500 rounded-xl text-white py-2 hover:scale-105 duration-300">
+                        <button onClick={onSubmit} className="bg-gradient-to-r from-purple-600 to-blue-500 rounded-xl text-white py-2 hover:scale-105 duration-300">
                             Signup
                         </button>
                     </form>

@@ -4,7 +4,7 @@ import { Context as AuthContext } from '../context/AuthContext'
 
 
 const Login = () => {
-    const { state , login } = useContext(AuthContext)
+    const { state: {isAuthenticated}, login } = useContext(AuthContext)
     const history = useNavigate()
 
     const [email, setEmail] = useState('')
@@ -15,7 +15,7 @@ const Login = () => {
         login(email, password, history)
     }
 
-    if (state.isAuthenticated) {
+    if (isAuthenticated) {
         return <Navigate to="/profile"/>
     }
     

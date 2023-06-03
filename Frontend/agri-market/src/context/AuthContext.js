@@ -46,22 +46,37 @@ const login = dispatch => async (email, password, history) => {
     const body = JSON.stringify({ email, password })
     try {
         const response = await agriApi.post('/signin', body, config)
-        // console.log(response.data);
+        console.log(response.data);
         localStorage.setItem('token', response.data)
         dispatch({ type: 'LOGIN_SUCCESS', payload: response.data })
         history('/profile')
-        // dispatch(loadUser())
     } catch (err) {
         const errors = err.response.data.errors
         console.log(err);
-        // if (errors) {
-        //     errors.forEach(error => {
-        //         dispatch(setAlert(error.msg, 'danger'))
-        //     });
-        // }
+        // dispatch({ type: LOGIN_FAIL })
+    }
+}
+
+const signup = dispatch => async (name, email, mobile, password, history) => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+
+    const body = JSON.stringify({ name, email, mobile, password })
+    try {
+        const response = await agriApi.post('/signup', body, config)
+        console.log(response.data);
+        localStorage.setItem('token', response.data)
+        dispatch({ type: 'LOGIN_SUCCESS', payload: response.data })
+        history('/profile')
+    } catch (err) {
+        const errors = err.response.data.errors
+        console.log(err);
         // dispatch({ type: LOGIN_FAIL })
     }
 }
 
 
-export const { Provider, Context } = createDataContext(authReducer, { login, loadUser }, { token: localStorage.getItem('token'), isAuthenticated: null, loading: true, user: null })
+export const { Provider, Context } = createDataContext(authReducer, { login, signup, loadUser }, { token: localStorage.getItem('token'), isAuthenticated: null, loading: true, user: null })

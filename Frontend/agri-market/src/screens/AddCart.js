@@ -26,11 +26,13 @@ const AddCart = () => {
             <ul className=' space-y-5 ' >
                 {listItems}
             </ul>
-            <div className='flex justify-end m-14 ' >
-                <button className='bg-green-500 p-5 px-20 text-white font-bold text-xl hover:scale-105 duration-700 shadow-[-1px_-2px_8px_3px_#00000024,-1px_-2px_8px_3px_#00000024,-1px_-2px_8px_3px_#00000024] ' >
-                    Check Out
-                </button>
-            </div>
+            {cart.length > 0 && (
+                <div className='flex justify-end m-14 ' >
+                    <button className='bg-green-500 p-5 px-20 text-white font-bold text-xl hover:scale-105 duration-700 shadow-[-1px_-2px_8px_3px_#00000024,-1px_-2px_8px_3px_#00000024,-1px_-2px_8px_3px_#00000024] ' >
+                        Check Out
+                    </button>
+                </div>
+            )}
         </div>
     )
 }
