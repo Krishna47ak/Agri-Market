@@ -1,6 +1,7 @@
 require('./models/User')
 const express = require('express')
 const mongoose = require('mongoose')
+const User = mongoose.model('User')
 const bodyParser = require('body-parser')
 const authRoutes = require('./routes/authRoutes')
 const cors = require('cors')
@@ -25,8 +26,9 @@ mongoose.connection.on("error", (err) => {
     console.error('Error connecting to mongo', err );
 })
 
-app.get('/', requireAuth, (req,res) => {
-    res.send(`Your email: ${req.user.email}`)
+app.get('/', requireAuth, async (req,res) => {
+    const user = await User.findById(req.user._id).select('-password')
+    res.send(user)
 })
 
 app.listen(4000, () => {

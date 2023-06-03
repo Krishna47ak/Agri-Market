@@ -19,7 +19,13 @@ const userSchema =  new mongoose.Schema({
     password: {
         type: String,
         required: true
-    }
+    },
+    pincode: {
+        type: String
+    },
+    address: {
+        type: String
+    },
 })
 
 userSchema.pre('save', function(next) {
