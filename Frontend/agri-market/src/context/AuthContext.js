@@ -91,6 +91,25 @@ const signup = dispatch => async (name, email, mobile, password, history) => {
     }
 }
 
+const editProfile = dispatch => async (name, email, mobile, pincode, address, history) => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+
+    const body = JSON.stringify({ name, email, mobile, pincode, address })
+    try {
+        const response = await agriApi.put('/profile-edit', body, config)
+        dispatch({ type: 'FETCH_USER', payload: response.data })
+        history('/profile')
+    } catch (err) {
+        const errors = err.response.data.errors
+        console.log(err);
+        // dispatch({ type: LOGIN_FAIL })
+    }
+}
 
 
-export const { Provider, Context } = createDataContext(authReducer, { login, signup, fetchUser }, { token: localStorage.getItem('token'), isAuthenticated: null, loading: true, user: null })
+
+export const { Provider, Context } = createDataContext(authReducer, { login, signup, fetchUser, editProfile }, { token: localStorage.getItem('token'), isAuthenticated: null, loading: true, user: null })

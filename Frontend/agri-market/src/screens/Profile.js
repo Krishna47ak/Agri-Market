@@ -6,7 +6,7 @@ import ProfileDetail from '../components/profile/ProfileDetail'
 
 const Profile = () => {
   const { state: { user, isAuthenticated, loading }, fetchUser } = useContext(AuthContext)
-
+  
   useEffect(() => {
     fetchUser()
   }, [])
@@ -31,7 +31,7 @@ const Profile = () => {
           <ProfileDetail title={'Email'} info={user?.email} />
           <ProfileDetail title={'Mobile Number'} info={user?.mobile} />
           <ProfileDetail title={'Pincode'} info={user?.pincode} />
-          <ProfileDetail title={'Address'} info={user?.address} style={'h-20'} />
+          <ProfileDetail title={'Address'} info={user?.address} isAddress={true} />
         </div>
       </div>
     </div>
