@@ -1,5 +1,8 @@
 import { useContext, useEffect } from 'react'
 import { Context as AuthContext } from '../context/AuthContext'
+import { Link, Navigate } from 'react-router-dom'
+import EditIcon from '../assets/svg/EditSVG'
+import ProfileDetail from '../components/profile/ProfileDetail'
 
 const Profile = () => {
   const { state: { user, isAuthenticated, loading }, fetchUser } = useContext(AuthContext)
@@ -8,18 +11,27 @@ const Profile = () => {
     fetchUser()
   }, [])
 
+  if (!isAuthenticated) {
+    return <Navigate to="/login" />
+  }
+
 
   return (
-    <div className=' text-black p-14  flex flex-col items-center ' >
+    <div className='p-14  flex flex-col items-center ' >
       <div className='bg-gray-400 p-5 rounded-xl ' >
-        <p className='text-3xl font-Poppins font-bold' >My Profile</p>
+        <div className='flex justify-between' >
+          <p className='text-black text-3xl font-Poppins font-bold' >My Profile</p>
+          <Link to='/profile-edit' className='bg-gray-300  flex items-center p-3 rounded-full ' >
+            <EditIcon />
+          </Link>
+        </div>
 
         <div className='text-xl space-y-5 mt-14 mb-7 w-[35rem]'  >
-          <div className='flex bg-white p-3 px-5 rounded-xl justify-between' ><span className='font-bold mr-3' >Name :</span> <p className='font-semibold' >{user?.name} </p></div>
-          <div className='flex bg-white p-3 px-5 rounded-xl justify-between' ><span className='font-bold mr-3' >Email :</span> <p className='font-semibold' >{user?.email} </p></div>
-          <div className='flex bg-white p-3 px-5 rounded-xl justify-between' ><span className='font-bold mr-3' >Mobile Number :</span> <p className='font-semibold' >{user?.mobile} </p></div>
-          <div className='flex bg-white p-3 px-5 rounded-xl justify-between' ><span className='font-bold mr-3' >Pincode :</span>  <p className='font-semibold' >{user?.pincode} </p></div>
-          <div className='flex bg-white p-3 px-5 rounded-xl justify-between  h-20 ' ><span className='font-bold mr-3' >Address :</span> <p className='font-semibold' >{user?.address} </p></div>
+          <ProfileDetail title={'Name'} info={user?.name} />
+          <ProfileDetail title={'Email'} info={user?.email} />
+          <ProfileDetail title={'Mobile Number'} info={user?.mobile} />
+          <ProfileDetail title={'Pincode'} info={user?.pincode} />
+          <ProfileDetail title={'Address'} info={user?.address} style={'h-20'} />
         </div>
       </div>
     </div>

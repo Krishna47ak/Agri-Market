@@ -5,7 +5,7 @@ const Navbar = () => {
     return (
         <>
             <header className="bg-white flex px-5 md:px-20 py-2 items-center shadow-xl">
-                <Link to="/" className="md:text-2xl font-bold font-Poppins flex items-center"><img className='h-12 md:h-20 mx-3 pb-3' src={require('../../img/harvest.png')} alt='logo' />Agri Market</Link>
+                <Link to="/" className="md:text-2xl font-bold font-Poppins flex items-center"><img className='h-12 md:h-20 mx-3 pb-3' src={require('../../assets/img/harvest.png')} alt='logo' />Agri Market</Link>
 
                 <nav className="hidden md:inline space-x-6 mx-auto">
                     <Link className='text-gray-600 text-lg font-Poppins hover:text-green-400' to="/">Home</Link>

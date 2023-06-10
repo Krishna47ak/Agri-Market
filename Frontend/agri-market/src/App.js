@@ -7,15 +7,16 @@ import HomePage from './screens/HomePage';
 import Login from './screens/LoginPage';
 import Signup from './screens/SignupPage';
 import Profile from './screens/Profile';
+import ProfileEdit from './screens/ProfileEdit';
 
 import { Context as AuthContext } from '../src/context/AuthContext'
 
 function App() {
-  const { state, loadUser } = useContext(AuthContext)
+  const { state, fetchUser } = useContext(AuthContext)
 
 
   useEffect(() => {
-    loadUser()
+    fetchUser()
   }, [])
   return (
     <Router>
@@ -27,6 +28,7 @@ function App() {
           <Route exact path='/signup' element={<Signup />} />
           <Route exact path='/addcart' element={<AddCart />} />
           <Route exact path='/profile' element={<Profile />} />
+          <Route exact path='/profile-edit' element={<ProfileEdit />} />
         </Routes>
       </Fragment>
     </Router >

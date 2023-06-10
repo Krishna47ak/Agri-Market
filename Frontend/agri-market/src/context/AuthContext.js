@@ -4,10 +4,11 @@ import agriApi from "../api/agriApi"
 
 const authReducer = (state, action) => {
     switch (action.type) {
-        case 'USER_LOADED':
+        case 'FETCH_USER':
             return {
                 ...state,
-                token: action.payload,
+                token: localStorage.getItem('token'),
+                user: action.payload,
                 isAuthenticated: true,
                 loading: false
             }
@@ -19,11 +20,12 @@ const authReducer = (state, action) => {
                 isAuthenticated: true,
                 loading: false
             }
-        case 'FETCH_USER':
+        case 'AUTH_ERROR':
+            // localStorage.removeItem('token')
             return {
                 ...state,
-                user: action.payload,
-                isAuthenticated: true,
+                token: null,
+                isAuthenticated: false,
                 loading: false
             }
         default:
@@ -31,15 +33,21 @@ const authReducer = (state, action) => {
     }
 }
 
-const loadUser = dispatch => async () => {
-    try {
-        const token = localStorage.getItem('token')
-        if (token) {
-            dispatch({ type: 'USER_LOADED', payload: token })
+const fetchUser = dispatch => async () => {
+    const config = {
+        headers: {
+            "ngrok-skip-browser-warning": "69420" //this also resolved cors error 
         }
+    }
+
+    try {
+        const response = await agriApi.get('/', config)
+        dispatch({ type: 'FETCH_USER', payload: response.data })
     } catch (err) {
-        // dispatch({ type: AUTH_ERROR })
-        console.log(err.response.data.errors);
+        dispatch({ type: 'AUTH_ERROR' })
+        const errors = err.response.data.error
+        console.log(errors);
+        // const errors = err.response.data.errors
     }
 }
 
@@ -57,8 +65,8 @@ const login = dispatch => async (email, password, history) => {
         dispatch({ type: 'LOGIN_SUCCESS', payload: response.data })
         history('/profile')
     } catch (err) {
-        const errors = err.response.data.errors
-        console.log(err);
+        const errors = err.response.data.error
+        console.log(errors);
         // dispatch({ type: LOGIN_FAIL })
     }
 }
@@ -69,7 +77,7 @@ const signup = dispatch => async (name, email, mobile, password, history) => {
             'Content-Type': 'application/json'
         }
     }
-    
+
     const body = JSON.stringify({ name, email, mobile, password })
     try {
         const response = await agriApi.post('/signup', body, config)
@@ -83,22 +91,6 @@ const signup = dispatch => async (name, email, mobile, password, history) => {
     }
 }
 
-const fetchUser = dispatch => async () => {
-    const config = {
-        headers: {
-            "ngrok-skip-browser-warning": "69420" //this also resolved cors error 
-        }
-    }
-
-    try {
-        const response = await agriApi.get('/', config)
-        dispatch({ type: 'FETCH_USER', payload: response.data })
-    } catch (err) {
-        const errors = err.response.data.errors
-        console.log(err);
-        // dispatch({ type: LOGIN_FAIL })
-    }
-}
 
 
-export const { Provider, Context } = createDataContext(authReducer, { login, signup, loadUser, fetchUser }, { token: localStorage.getItem('token'), isAuthenticated: null, loading: true, user: null })
+export const { Provider, Context } = createDataContext(authReducer, { login, signup, fetchUser }, { token: localStorage.getItem('token'), isAuthenticated: null, loading: true, user: null })
