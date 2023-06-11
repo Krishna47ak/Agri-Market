@@ -1,8 +1,10 @@
 import React, { useContext } from 'react'
 import { Context as AddCartContext } from '../context/AddCartContext'
+import { Context as AlertContext } from '../context/AlertContext'
 
 const AddCart = () => {
     const { state: { cart }, deleteItems, addQuantity, removeQuantity } = useContext(AddCartContext)
+    const { setAlert } = useContext(AlertContext)
 
     const listItems = cart.map((item) =>
         <li className='flex items-center' key={item.id} >
@@ -14,7 +16,10 @@ const AddCart = () => {
                 <button className='cursor-pointer' onClick={() => addQuantity(item.id)} >+</button>
             </div>
             <p className='text-xl font-semibold mr-36 w-24 ' >Rs. {item.price * item.qty}/-</p>
-            <div onClick={() => deleteItems(item.id)} >
+            <div onClick={() => {
+                deleteItems(item.id)
+                setAlert('Item Deleted', 'bg-red-500')
+            }} >
                 <i className="fas fa-trash text-2xl mr-16 hover:text-red-700 "></i>
             </div>
         </li>

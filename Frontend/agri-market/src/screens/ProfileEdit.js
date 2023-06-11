@@ -1,11 +1,14 @@
 import { useState, useContext, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Context as AuthContext } from '../context/AuthContext'
 import ProfileInputEdit from '../components/profile/ProfileInputEdit'
 
+import { Context as AuthContext } from '../context/AuthContext'
+import { Context as AlertContext } from '../context/AlertContext'
 
 const ProfileEdit = () => {
-    const { state: { user, isAuthenticated, loading }, editProfile } = useContext(AuthContext)
+    const { state: { user, loading }, editProfile } = useContext(AuthContext)
+    const { setAlert } = useContext(AlertContext)
+
     const history = useNavigate()
 
     const [name, setName] = useState(user?.name)
@@ -25,6 +28,7 @@ const ProfileEdit = () => {
     const onSubmit = e => {
         e.preventDefault()
         editProfile(name, email, mobile, pincode, address, history);
+        setAlert('Profile Edited', 'bg-green-500')
     }
 
     return (

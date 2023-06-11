@@ -8,6 +8,7 @@ import Login from './screens/LoginPage';
 import Signup from './screens/SignupPage';
 import Profile from './screens/Profile';
 import ProfileEdit from './screens/ProfileEdit';
+import Alert from './components/alert/Alert';
 
 import { Context as AuthContext } from '../src/context/AuthContext'
 
@@ -22,6 +23,7 @@ function App() {
     <Router>
       <Fragment>
         <Navbar />
+        <Alert/>
         <Routes>
           <Route exact path='/' element={<HomePage />} />
           <Route exact path='/login' element={<Login />} />
